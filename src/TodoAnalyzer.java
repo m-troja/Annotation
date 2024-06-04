@@ -18,16 +18,9 @@
  *                 Method returns String of each method analysis divided by new line separator. Each line should have the next format:
  * method name: <HERE METHOD NAME>, author: <HERE AUTHOR>, priority: <HERE PRIORITY>, status: <HERE STATUS>
  */
-
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
 public class TodoAnalyzer {
-
-    public TodoAnalyzer(){};
     public String getTodoReport(Class<? extends Object> clazz) {
         return Arrays.stream(clazz.getDeclaredMethods())
                 .filter(method -> method.getAnnotation(Todo.class) != null)
