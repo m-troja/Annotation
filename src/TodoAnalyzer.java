@@ -19,17 +19,32 @@
  * method name: <HERE METHOD NAME>, author: <HERE AUTHOR>, priority: <HERE PRIORITY>, status: <HERE STATUS>
  */
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class TodoAnalyzer {
-    @Todo
-    public String getTodoReport(Class classObject ) {
-        String string = "method name: <HERE METHOD NAME>, author: <HERE AUTHOR>, priority: <HERE PRIORITY>, status: <HERE STATUS>";
 
-        return string;
-    };
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public TodoAnalyzer(){};
+    public String getTodoReport(Class<? extends Object> clazz) {
+        return Arrays.stream(clazz.getDeclaredMethods())
+                .filter(method -> method.getAnnotation(Todo.class) != null)
+                .map(method -> {
+                    var todoAnnotation = method.getAnnotation(Todo.class);
+                    return "method name: " + method.getName()
+                            + ", author: " + todoAnnotation.author()
+                            + ", priority: " + todoAnnotation.priority()
+                            + ", status: " + todoAnnotation.status();
+                })
+                .collect(Collectors.joining(System.lineSeparator()));
     }
-
-
-
+    public static void main(String[] args) {
+        TodoSamples todoSample = new TodoSamples();
+        Class sampleClass = todoSample.getClass();
+        TodoAnalyzer analyzer = new TodoAnalyzer();
+        String analyzedString = analyzer.getTodoReport(sampleClass);
+        System.out.println(analyzedString);
+    }
 }
