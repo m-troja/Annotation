@@ -19,8 +19,13 @@
  * method name: <HERE METHOD NAME>, author: <HERE AUTHOR>, priority: <HERE PRIORITY>, status: <HERE STATUS>
  */
 
-public class Main {
+public class TodoAnalyzer {
+    @Todo
+    public String getTodoReport(Class classObject ) {
+        String string = "method name: <HERE METHOD NAME>, author: <HERE AUTHOR>, priority: <HERE PRIORITY>, status: <HERE STATUS>";
 
+        return string;
+    };
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
